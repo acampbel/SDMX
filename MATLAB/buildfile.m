@@ -5,7 +5,8 @@ import matlab.buildtool.tasks.*;
 % Create a plan from task functions
 plan = buildplan(localfunctions);
 
-plan("check") = CodeIssuesTask;
+plan("check") = CodeIssuesTask(WarningThreshold=0);
+
 plan("test") = TestTask(...
     SourceFiles="tbx/sdmx", ...
     TestResults="tests/reports/results/index.html",...
