@@ -64,11 +64,11 @@ jobs:
             path: MATLAB/tbx/lib
             
         # Sets up MATLAB on the GitHub Actions runner
-      - name: Setup MATLAB
-        uses: matlab-actions/setup-matlab@v2-rc0
-        with: 
-          release: R2023b
-          cache: true
+        - name: Setup MATLAB
+          uses: matlab-actions/setup-matlab@v2-rc0
+          with: 
+            release: R2023b
+            cache: true
 
         # Run buildtool to test and package MATLAB.
         - name: Run buildtool
