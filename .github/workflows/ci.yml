@@ -72,7 +72,7 @@ jobs:
         - name: Run buildtool
           uses: matlab-actions/run-build@v1
           with: 
-            startup-options: -sd MATLAB
+            startup-options: -sd "MATLAB"
 
         # Upload MATLAB Toolbox, it won't be there if the test failed
         - name: Archive MATLAB Toolbox
