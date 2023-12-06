@@ -70,9 +70,9 @@ jobs:
 
         # Run buildtool to test and package MATLAB.
         - name: Run buildtool
-          uses: matlab-actions/run-build@v1
+          uses: matlab-actions/run-command@v1
           with: 
-            startup-options: -sd "MATLAB"
+            command: cd MATLAB, buildtool
 
         # Upload MATLAB Toolbox, it won't be there if the test failed
         - name: Archive MATLAB Toolbox
