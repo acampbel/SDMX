@@ -86,11 +86,11 @@ jobs:
             if-no-files-found: ignore
 
         - name: Setup Pages
-          if: github.ref == 'refs/heads/master'
+          if: success() || failure()
           uses: actions/configure-pages@v3
 
-        - name: Upload Artifact
-          if: github.ref == 'refs/heads/master'
+        - name: Upload Report Artifacts
+          if: success() || failure()
           uses: actions/upload-pages-artifact@v1
           with:
             # location of the MATLAB artifacts
