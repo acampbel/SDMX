@@ -1,50 +1,21 @@
 function plan = buildfile
 
+import matlab.buildtool.tasks.*;
+
 % Create a plan from task functions
 plan = buildplan(localfunctions);
 
-% Make the "archive" task the default task in the plan
-plan.DefaultTasks = "archive";
+plan("check") = CodeIssuesTask;
+plan("test") = TestTask(...
+    SourceFiles="tbx/sdmx", ...
+    TestResults="tests/reports/results/index.html",...
+    CodeCoverageResults="tests/reports/coverageReport/index.html");
 
 % Make the "archive" task dependent on the "check" and "test" tasks
 plan("archive").Dependencies = ["check" "test"];
-end
 
-function checkTask(~)
-% Identify code issues
-issues = codeIssues;
-assert(isempty(issues.Issues),formattedDisplayText( ...
-    issues.Issues(:,["Location" "Severity" "Description"])))
-end
-
-function testTask(~)
-
-% Run unit tests
-import matlab.unittest.TestRunner;
-import matlab.unittest.TestSuite;
-import matlab.unittest.plugins.TestReportPlugin;
-import matlab.unittest.plugins.CodeCoveragePlugin
-import matlab.unittest.plugins.codecoverage.CoverageReport
-import matlab.unittest.plugins.codecoverage.CoverageResult
-
-suite = TestSuite.fromProject(currentProject);
-
-runner = TestRunner.withTextOutput;
-htmlFolder = 'tests/reports/results';
-plugin = TestReportPlugin.producingHTML(htmlFolder);
-runner.addPlugin(plugin);
-
-sourceCodeFolder = "tbx/sdmx";
-reportFolder = "tests/reports/coverageReport";
-reportFormat = CoverageReport(reportFolder);
-format = CoverageResult;
-plugin = CodeCoveragePlugin.forFolder(sourceCodeFolder,"Producing",[reportFormat,format], ...
-    IncludingSubfolders = true);
-runner.addPlugin(plugin)
-
-results = runner.run(suite);
-
-assertSuccess(results);
+% Make the "archive" task the default task in the plan
+plan.DefaultTasks = "archive";
 
 end
 
