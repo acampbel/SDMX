@@ -119,6 +119,7 @@ jobs:
           run: |
             echo '<a href="https://acampbel.github.io/SDMX/results/" target="_blank">Test results report</a>' >> $GITHUB_STEP_SUMMARY
             echo '<a href="https://acampbel.github.io/SDMX/coverageReport/" target="_blank">Code coverage report</a>' >> $GITHUB_STEP_SUMMARY
+            echo ::notice:: [Test results report]\(https://acampbel.github.io/SDMX/results/\)
 
         - name: Fail if MATLAB build failed
           if: ${{ steps.matlab-build.outcome }} == 'failure' 
